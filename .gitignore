@@ -1,0 +1,9 @@
+/build/
+/*.d
+/*.lst
+/*.o
+/*.elf
+/*.bin
+/*.hex
+/.vs/
+/*.log
