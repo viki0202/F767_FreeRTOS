@@ -31,10 +31,6 @@ OPT = -Og
 # Build path
 BUILD_DIR = build
 
-######################################
-# source
-######################################
-# C sources
 C_SOURCES =  \
 Core/Src/main.c \
 Core/Src/stm32f7xx_it.c \
@@ -77,11 +73,12 @@ Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c \
 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c
 
-# ASM sources
+CPP_SOURCES = \
+Core/Src/uart_task.cpp
+
 ASM_SOURCES =  \
 startup_stm32f767xx.s
 
-# ASMM sources
 ASMM_SOURCES = 
 
 
@@ -92,6 +89,7 @@ ASMM_SOURCES =
 PREFIX = arm-none-eabi-
 # The gcc compiler bin path can be either defined in make command via GCC_PATH variable (> make GCC_PATH=xxx)
 # either it can be added to the PATH environment variable.
+
 ifdef GCC_PATH
 CC = $(GCC_PATH)/$(PREFIX)gcc
 CXX = $(GCC_PATH)/$(PREFIX)g++
@@ -105,6 +103,7 @@ AS = $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
 SZ = $(PREFIX)size
 endif
+
 HEX = $(CP) -O ihex
 BIN = $(CP) -O binary -S
  

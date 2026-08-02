@@ -103,7 +103,8 @@ static void MX_USART3_UART_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
 void StartDefaultTask(void *argument);
 void LedTaskEntry(void *argument);
-void UartTaskEntry(void *argument);
+
+extern void UartTask_Start(void);
 
 /* USER CODE BEGIN PFP */
 
@@ -149,6 +150,7 @@ int main(void)
   MX_ETH_Init();
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
+  UartTask_Start();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -178,9 +180,6 @@ int main(void)
 
   /* creation of LedTask */
   LedTaskHandle = osThreadNew(LedTaskEntry, NULL, &LedTask_attributes);
-
-  UartTaskHandle = osThreadNew(UartTaskEntry, NULL, &UartTask_attributes);
-
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -482,19 +481,7 @@ void LedTaskEntry(void *argument)
   /* USER CODE END LedTaskEntry */
 }
 
-void UartTaskEntry(void *argument)
-{
-  const char *msg = "UART task alive!\r\n";
-
-  for(;;)
-  {
-    HAL_UART_Transmit(&huart3, (uint8_t*)msg, strlen(msg), 100);
-    osDelay(1000);   // wysyłaj co 1 sekundę
-  }
-}
-
-
- /* MPU Configuration */
+/* MPU Configuration */
 
 void MPU_Config(void)
 {
