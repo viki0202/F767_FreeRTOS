@@ -4,6 +4,8 @@
 #include "task.h"
 #include <cstring>
 
+extern "C" UART_HandleTypeDef huart3;
+
 namespace
 {
 void uartTask(void* argument)
