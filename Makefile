@@ -60,6 +60,7 @@ Core/Src/sysmem.c \
 Core/Src/syscalls.c \
 Core/Src/freertos.c \
 Core/Src/stm32f7xx_hal_timebase_tim.c \
+Core/Src/logger_c_wrapper.c \
 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.c \
 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.c \
 Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
@@ -74,7 +75,8 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c
 
 CPP_SOURCES = \
-Core/Src/uart_task.cpp
+Core/Src/uart_task.cpp \
+Core/Src/logger.cpp
 
 ASM_SOURCES =  \
 startup_stm32f767xx.s

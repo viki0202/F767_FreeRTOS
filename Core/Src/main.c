@@ -20,6 +20,7 @@
 #include "main.h"
 #include "string.h"
 #include "cmsis_os.h"
+#include "logger_c_wrapper.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -150,6 +151,13 @@ int main(void)
   MX_ETH_Init();
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
+
+  LOGE_C("Error example");
+  LOGW_C("Warning example");
+  LOGI_C("System started");
+  LOGD_C("Build number=%lu", 1UL);
+
+
   UartTask_Start();
   /* USER CODE BEGIN 2 */
 
