@@ -75,7 +75,6 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c
 
 CPP_SOURCES = \
-Core/Src/uart_task.cpp \
 Core/Src/logger.cpp
 
 ASM_SOURCES =  \

@@ -83,14 +83,6 @@ const osThreadAttr_t LedTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal1,
 };
 
-/* Definitions for UartTask */
-osThreadId_t UartTaskHandle;
-const osThreadAttr_t UartTask_attributes = {
-  .name = "UartTask",
-  .stack_size = 256 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
-
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -104,8 +96,6 @@ static void MX_USART3_UART_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
 void StartDefaultTask(void *argument);
 void LedTaskEntry(void *argument);
-
-extern void UartTask_Start(void);
 
 /* USER CODE BEGIN PFP */
 
@@ -152,13 +142,6 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
 
-  LOGE_C("Error example");
-  LOGW_C("Warning example");
-  LOGI_C("System started");
-  LOGD_C("Build number=%lu", 1UL);
-
-
-  UartTask_Start();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -463,7 +446,8 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    LOGI_C("RTOS scheduler task tick");
+    osDelay(1000);
   }
   /* USER CODE END 5 */
 }

@@ -40,7 +40,7 @@ const char* levelToText(LogLevel level)
 void Logger_Log(
     LogLevel level,
     const char* format,
-    ...)
+    std::va_list arguments)
 {
     if (format == nullptr)
     {
@@ -61,16 +61,11 @@ void Logger_Log(
         return;
     }
 
-    va_list arguments;
-    va_start(arguments, format);
-
     const int messageLength = std::vsnprintf(
         buffer + prefixLength,
         sizeof(buffer) - static_cast<std::size_t>(prefixLength),
         format,
         arguments);
-
-    va_end(arguments);
 
     if (messageLength < 0)
     {
@@ -91,4 +86,15 @@ void Logger_Log(
         reinterpret_cast<const std::uint8_t*>(buffer),
         static_cast<std::uint16_t>(used),
         100U);
+}
+
+void Logger_Log(
+    LogLevel level,
+    const char* format,
+    ...)
+{
+    va_list arguments;
+    va_start(arguments, format);
+    Logger_Log(level, format, arguments);
+    va_end(arguments);
 }
