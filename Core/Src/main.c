@@ -418,9 +418,13 @@ void StartDefaultTask(void const * argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
-  for(;;)
+  uint32_t counter = 0u;
+
+  for (;;)
   {
-    osDelay(1);
+    TRACE_EVENT(TRACE_USER_MARKER, TRACE_CTX_USER, counter++);
+    Trace_FlushUart(&huart3);
+    osDelay(100);
   }
   /* USER CODE END 5 */
 }

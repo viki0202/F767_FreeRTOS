@@ -127,31 +127,10 @@ header file. */
 /* --- TRACE HOOKS --- */
 
 #define traceTASK_SWITCHED_IN() \
-    TRACE_EVENT(TRACE_TASK_START, (uint32_t)pxCurrentTCB, 0)
+    do { TRACE_EVENT(TRACE_TASK_START, Trace_GetTaskId(pxCurrentTCB), 0u); } while (0)
 
 #define traceTASK_SWITCHED_OUT() \
-    TRACE_EVENT(TRACE_TASK_STOP, (uint32_t)pxCurrentTCB, 0)
-
-#define traceTASK_NOTIFY() \
-    TRACE_EVENT(TRACE_TASK_WAKE, (uint32_t)pxCurrentTCB, 0)
-
-#define traceQUEUE_SEND(xQueue) \
-    TRACE_EVENT(TRACE_QUEUE_SEND, (uint32_t)(xQueue), uxQueueMessagesWaiting(xQueue))
-
-#define traceQUEUE_RECEIVE(xQueue) \
-    TRACE_EVENT(TRACE_QUEUE_RECEIVE, (uint32_t)(xQueue), uxQueueMessagesWaiting(xQueue))
-
-#define traceQUEUE_SEND_FAILED(xQueue) \
-    TRACE_EVENT(TRACE_QUEUE_FULL, (uint32_t)(xQueue), uxQueueMessagesWaiting(xQueue))
-
-#define traceBLOCKING_ON_MUTEX_TAKE(xMutex) \
-    TRACE_EVENT(TRACE_MUTEX_WAIT_BEGIN, (uint32_t)(xMutex), 0)
-
-#define traceTASK_PRIORITY_INHERIT(pxTCBOfMutexHolder, uxInheritedPriority) \
-    TRACE_EVENT(TRACE_MUTEX_ACQUIRED, (uint32_t)(pxTCBOfMutexHolder), (uint32_t)(uxInheritedPriority))
-
-#define traceTASK_PRIORITY_DISINHERIT(pxTCBOfMutexHolder, uxOriginalPriority) \
-    TRACE_EVENT(TRACE_MUTEX_RELEASED, (uint32_t)(pxTCBOfMutexHolder), (uint32_t)(uxOriginalPriority))
+    do { TRACE_EVENT(TRACE_TASK_STOP, Trace_GetTaskId(pxCurrentTCB), 0u); } while (0)
 
 /* USER CODE END 1 */
 
