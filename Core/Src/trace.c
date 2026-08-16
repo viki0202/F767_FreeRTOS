@@ -39,8 +39,9 @@ static inline void Trace_Unlock(uint32_t primask)
  * --------------------------------------------------------- */
 void Trace_Init(void)
 {
-    /* Wlacz DWT bez kasowania innych bitow DEMCR/CTRL. */
     CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+
+    *((volatile uint32_t *)0xE0001FB0UL) = 0xC5ACCE55UL;
 
     DWT->CYCCNT = 0u;
     DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;

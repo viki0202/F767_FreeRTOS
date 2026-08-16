@@ -132,6 +132,12 @@ header file. */
 #define traceTASK_SWITCHED_OUT() \
     do { TRACE_EVENT(TRACE_TASK_STOP, Trace_GetTaskId(pxCurrentTCB), 0u); } while (0)
 
+#define traceTASK_CREATE(pxNewTCB) \
+    do { TRACE_EVENT(TRACE_TASK_CREATE, Trace_GetTaskId(pxNewTCB), 0u); } while (0)
+
+#define traceTASK_DELETE(pxTargetTCB) \
+    do { TRACE_EVENT(TRACE_TASK_DELETE, Trace_GetTaskId(pxTargetTCB), 0u); } while (0)
+
 /* USER CODE END 1 */
 
 

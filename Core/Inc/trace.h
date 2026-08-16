@@ -37,9 +37,11 @@ typedef enum
  * --------------------------------------------------------- */
 typedef enum
 {
-    TRACE_TASK_START       = 1,
-    TRACE_TASK_STOP        = 2,
-    TRACE_TASK_WAKE        = 3,
+    TRACE_TASK_START        = 1,
+    TRACE_TASK_STOP         = 2,
+    TRACE_TASK_WAKE         = 3,
+    TRACE_TASK_CREATE       = 4,
+    TRACE_TASK_DELETE       = 5,
 
     TRACE_MUTEX_WAIT_BEGIN = 10,
     TRACE_MUTEX_ACQUIRED   = 11,
