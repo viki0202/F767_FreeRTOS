@@ -153,6 +153,8 @@ C_INCLUDES =  \
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
 CFLAGS += $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS += -Wall -Wextra -Wshadow -Wdouble-promotion -Wformat=2 -Wundef -Wconversion -Wimplicit-fallthrough
+
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
@@ -167,6 +169,9 @@ CXXFLAGS = $(CFLAGS) \
 -fno-exceptions \
 -fno-rtti \
 -fno-use-cxa-atexit
+
+CXXFLAGS += -Wall -Wextra -Wshadow -Wdouble-promotion -Wformat=2 -Wundef -Wconversion -Wimplicit-fallthrough
+
 
 #######################################
 # LDFLAGS
@@ -230,7 +235,7 @@ $(BUILD_DIR):
 # clean up
 #######################################
 clean:
-	-rm -fR $(BUILD_DIR)
+	-rmdir /S /Q $(BUILD_DIR)
   
 #######################################
 # dependencies

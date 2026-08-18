@@ -29,7 +29,8 @@ typedef enum
 typedef enum
 {
     TRACE_TASK_UNKNOWN = 0,
-    TRACE_TASK_DEFAULT = 1
+    TRACE_TASK_DEFAULT = 1,
+    TRACE_TASK_TRACE   = 2u
 } TraceTaskId;
 
 /* ---------------------------------------------------------
@@ -73,6 +74,9 @@ typedef struct
     uint32_t value;       /* argument zdarzenia */
 } TraceEvent;
 
+_Static_assert(sizeof(TraceEvent) == 12u,
+               "Unexpected TraceEvent size");
+
 /* ---------------------------------------------------------
  * Timestamp, DWT CYCCNT
  * --------------------------------------------------------- */
@@ -95,7 +99,12 @@ uint8_t Trace_GetTaskId(void *tcb);
  * Wazne: backslash na koncu linii jest wymagany.
  * --------------------------------------------------------- */
 #define TRACE_EVENT(eventId, contextId, value) \
-    Trace_Write((eventId), (uint8_t)(contextId), (uint32_t)(value))
+    Trace_Write((eventId),                     \
+                (uint8_t)(contextId),          \
+                (uint32_t)(value))
 
 #define TRACE_EVENT_FROM_ISR(eventId, contextId, value, hpw) \
-    Trace_WriteFromISR((eventId), (uint8_t)(contextId), (uint32_t)(value), (hpw))
+    Trace_WriteFromISR((eventId),                         \
+                       (uint8_t)(contextId),              \
+                       (uint32_t)(value),                 \
+                       (hpw))
