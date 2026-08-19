@@ -22,7 +22,7 @@ typedef enum
     TRACE_CTX_MUTEX   = 3,
     TRACE_CTX_NOTIFY  = 4,
     TRACE_CTX_ISR     = 5,
-    TRACE_CTX_USER    = 100
+    TRACE_CTX_TIMER   = 6
 } TraceContextId;
 
 /* ID taskow do dekodowania po stronie PC/Pythona. Rozszerzaj przy dodawaniu taskow. */

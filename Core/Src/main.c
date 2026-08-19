@@ -117,7 +117,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  Trace_Init();
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -126,7 +126,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
-
+  Trace_Init();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -422,7 +422,7 @@ void StartDefaultTask(void const * argument)
 
   for (;;)
   {
-    TRACE_EVENT(TRACE_USER_MARKER, TRACE_CTX_USER, counter++);
+    TRACE_EVENT(TRACE_USER_MARKER, TRACE_CTX_TIMER, counter++);
     Trace_FlushUart(&huart3);
     osDelay(100);
   }
