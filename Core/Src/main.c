@@ -80,7 +80,10 @@ static void MX_GPIO_Init(void);
 static void MX_ETH_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
-void StartDefaultTask(void const * argument);
+// void StartDefaultTask(void const * argument);
+void UartWriterA(void const *argument);
+void UartWriterB(void const *argument);
+void TraceFlushTask(void const *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -147,8 +150,17 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  // osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
+  // defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+
+    osThreadDef(uartA, UartWriterA, osPriorityNormal, 0, 256);
+    osThreadDef(uartB, UartWriterB, osPriorityAboveNormal, 0, 256);
+    osThreadDef(traceTx, TraceFlushTask, osPriorityNormal, 0, 384);
+
+    (void)osThreadCreate(osThread(uartA), NULL);
+    (void)osThreadCreate(osThread(uartB), NULL);
+    (void)osThreadCreate(osThread(traceTx), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -414,15 +426,49 @@ static void MX_GPIO_Init(void)
   * @retval None
   */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+// void StartDefaultTask(void const * argument)
+// {
+//   /* USER CODE BEGIN 5 */
+//   /* Infinite loop */
+//   for(;;)
+//   {
+//     osDelay(1);
+//   }
+//   /* USER CODE END 5 */
+// }
+
+void UartWriterA(void const *argument)
 {
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END 5 */
+    (void)argument;
+    for (;;)
+    {
+        Trace_UnsafeUartWriteSlow(&huart3,
+            "<TASK-A> ABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n", 1u);
+        osDelay(2u);
+    }
+}
+
+void UartWriterB(void const *argument)
+{
+    (void)argument;
+    for (;;)
+    {
+        Trace_UnsafeUartWriteSlow(&huart3,
+            "[task-b] 012345678901234567890123456789\r\n", 1u);
+        osDelay(2u);
+    }
+}
+
+void TraceFlushTask(void const *argument)
+{
+    (void)argument;
+    for (;;)
+    {
+        TRACE_EVENT(TRACE_USER_MARKER, TRACE_CONTEXT_UART_DEMO,
+                    TraceTimestamp_Get());
+        Trace_FlushUart(&huart3);
+        osDelay(1u);
+    }
 }
 
  /* MPU Configuration */
